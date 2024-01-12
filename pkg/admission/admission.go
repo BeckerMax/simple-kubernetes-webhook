@@ -51,6 +51,12 @@ func (a Admitter) ValidatePodReview() (*admissionv1.AdmissionReview, error) {
 		return reviewResponse(a.Request.UID, false, http.StatusBadRequest, e), err
 	}
 
+	///////////////////////
+	// added for K8s training to simulate a slow response
+	// comment the next line out if you want a fast response
+	time.Sleep(6 * time.Seconds)
+	///////////////////////
+
 	v := validation.NewValidator(a.Logger)
 	val, err := v.ValidatePod(pod)
 	if err != nil {
